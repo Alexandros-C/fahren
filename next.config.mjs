@@ -9,6 +9,8 @@ const nextConfig = {
       "@react-three/drei"
     ]
   },
+  // Prefer SWC; in unsupported environments Next falls back to @next/swc-wasm-nodejs if installed
+  swcMinify: true,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: []

@@ -4,11 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:termux": "HOST=0.0.0.0 PORT=3000 next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
+    "build:wasm": "NEXT_TELEMETRY_DISABLED=1 next build",
     "start": "next start",
+    "start:termux": "HOST=0.0.0.0 PORT=3000 next start -H 0.0.0.0 -p 3000",
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/swc-wasm-nodejs": "^14.2.32",
     "@react-three/drei": "^9.97.5",
     "@react-three/fiber": "^8.15.14",
     "@stripe/stripe-js": "^3.1.0",
@@ -32,5 +36,8 @@
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }
