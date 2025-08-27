@@ -1,4 +1,3 @@
-import { Header } from '@/components/Header'
 import Link from 'next/link'
 
 const titles: Record<string,string> = {
@@ -15,7 +14,6 @@ export default function CategoriaPage({ params }: { params: { categoria: string 
   const title = titles[params.categoria] ?? 'Categoría'
   return (
     <main>
-      <Header />
       <section className="pt-20 px-4">
         <div className="mx-auto max-w-6xl">
           <h1 className="font-display text-3xl text-white">{title}</h1>

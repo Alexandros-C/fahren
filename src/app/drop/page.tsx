@@ -1,11 +1,9 @@
-import { Header } from '@/components/Header'
 import Link from 'next/link'
 
 export default function DropPage() {
   return (
     <main>
-      <Header />
-      <section className="pt-28 px-4">
+      <section className="pt-20 px-4">
         <div className="mx-auto max-w-6xl">
           <h2 className="font-display text-3xl text-white">Drop actual</h2>
           <p className="mt-2 text-metal-300/80">Selección curada con estética Cyber-Renaissance.</p>

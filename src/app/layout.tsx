@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import AiStylistPanel from '@/components/AiStylistPanel'
 import Footer from '@/components/Footer'
+import { Header } from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Fahren — Cyber-Renaissance Store',
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" className="h-full">
       <body className="min-h-full font-ui">
         <div className="min-h-screen">
+          <Header />
           {children}
         </div>
         <Footer />

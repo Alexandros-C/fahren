@@ -1,9 +1,7 @@
-import { Header } from '@/components/Header'
 
 export default function ContactoPage() {
   return (
     <main>
-      <Header />
       <section className="pt-20 px-4">
         <div className="mx-auto max-w-3xl">
           <h1 className="font-display text-3xl text-white">Contacto</h1>

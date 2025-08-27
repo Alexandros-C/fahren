@@ -1,11 +1,9 @@
-import { Header } from '@/components/Header'
 import Link from 'next/link'
 
 export default function CartPage() {
   return (
     <main>
-      <Header />
-      <section className="pt-28 px-4">
+      <section className="pt-20 px-4">
         <div className="mx-auto max-w-4xl">
           <h1 className="font-display text-3xl text-white">Inventario</h1>
           <p className="mt-2 text-metal-300/80">Carrito de compras simulado.</p>

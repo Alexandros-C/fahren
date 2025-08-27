@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Header } from '@/components/Header'
 
 const categorias = [
   ['remeras','Remeras'],
@@ -14,7 +13,6 @@ const categorias = [
 export default function ProductosIndex() {
   return (
     <main>
-      <Header />
       <section className="pt-20 px-4">
         <div className="mx-auto max-w-5xl">
           <h1 className="font-display text-3xl text-white">Productos</h1>

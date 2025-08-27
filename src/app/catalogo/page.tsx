@@ -1,5 +1,4 @@
 "use client"
-import { Header } from '@/components/Header'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
@@ -9,8 +8,7 @@ const Rotator = dynamic(() => import('@/components/Rotator3D'), { ssr: false })
 export default function CatalogPage() {
   return (
     <main>
-      <Header />
-      <section className="pt-28 px-4">
+      <section className="pt-20 px-4">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-3xl text-white">Catálogo</h2>
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
