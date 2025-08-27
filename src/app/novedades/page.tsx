@@ -54,13 +54,15 @@ export default function NovedadesPage() {
                     </div>
                   </div>
                 </Link>
-                {/* Previews de productos por categoría (fila horizontal) */}
-                <div className="mt-3 flex gap-3 overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  {Array.from({length:8}).map((_,i)=> (
-                    <Link key={i} href={`/producto/${i+1}`} className="group w-24 shrink-0 snap-start">
-                      <div className="aspect-square rounded-md border border-white/5 bg-carbon-800/40" />
-                    </Link>
-                  ))}
+                {/* Previews de productos por categoría (fila horizontal con flechas) */}
+                <div className="mt-3">
+                  <Carousel>
+                    {Array.from({length:8}).map((_,i)=> (
+                      <Link key={i} href={`/producto/${i+1}`} className="group w-24 shrink-0 snap-start">
+                        <div className="aspect-square rounded-md border border-white/5 bg-carbon-800/40" />
+                      </Link>
+                    ))}
+                  </Carousel>
                 </div>
               </div>
             ))}
