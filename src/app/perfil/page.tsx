@@ -2,7 +2,7 @@
 import { useSession, signOut, signIn } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Coins } from 'lucide-react'
 
 export default function PerfilPage() {
   const { data } = useSession()
@@ -69,8 +69,18 @@ export default function PerfilPage() {
             </div>
           ) : (
             <div className="mt-6 rounded-xl border border-white/10 bg-carbon-800/40 p-4 text-metal-200">
-              <p><span className="text-white">Email:</span> {user.email}</p>
-              <p className="mt-2"><span className="text-white">Energía (puntos):</span> {user.points ?? 0}</p>
+              <div className="flex items-center justify-between">
+                <div className="truncate">
+                  <span className="text-white">{user.name || user.email}</span>
+                  {user.name && (
+                    <p className="text-xs text-metal-300/80 truncate">{user.email}</p>
+                  )}
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-neon-violet/30 bg-carbon-900 px-3 py-1 text-white shadow-glow">
+                  <Coins className="h-4 w-4 text-neon-violet" />
+                  <span className="text-sm font-semibold">{user.points ?? 0}</span>
+                </div>
+              </div>
               <button onClick={()=>signOut({ callbackUrl: '/' })} className="mt-4 rounded-full bg-carbon-700 px-4 py-2 text-sm">Cerrar sesión</button>
             </div>
           )}
