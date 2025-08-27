@@ -50,7 +50,7 @@ export function Header() {
               <input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Buscar" className="w-full bg-transparent text-sm text-metal-200 placeholder-metal-400 focus:outline-none" />
             </div>
             <nav className="mt-6 space-y-1 text-metal-300/90">
-              <Link href="/drop" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Último Drop</Link>
+              <Link href="/novedades" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Novedades</Link>
               <Link href="/catalogo" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Catálogo</Link>
 
               <button aria-expanded={openProductos} onClick={() => setOpenProductos(v=>!v)} className="flex w-full items-center justify-between rounded px-2 py-2 text-left hover:bg-carbon-800 hover:text-white">

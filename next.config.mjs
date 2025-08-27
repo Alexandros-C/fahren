@@ -14,6 +14,11 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: []
+  },
+  async redirects() {
+    return [
+      { source: '/drop', destination: '/novedades', permanent: true },
+    ]
   }
 };
 

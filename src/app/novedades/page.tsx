@@ -1,0 +1,26 @@
+export default function NovedadesPage() {
+  return (
+    <main>
+      <section className="pt-20 px-4">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="font-display text-3xl text-white">Novedades</h2>
+          <p className="mt-2 text-metal-300/80">Selección curada con estética Cyber-Renaissance.</p>
+          <div className="mt-8 grid grid-cols-2 gap-6">
+            {Array.from({length:6}).map((_,i)=> (
+              <div key={i} className="group relative overflow-hidden rounded-xl border border-white/5 bg-carbon-800/40 p-4 transition hover:border-neon-violet/30">
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-carbon-700 to-carbon-900" />
+                <div className="mt-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-white">Producto {i+1}</h3>
+                    <p className="text-sm text-metal-300/80">Serie limitada</p>
+                  </div>
+                  <span className="text-neon-violet">$ {199 + i}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}

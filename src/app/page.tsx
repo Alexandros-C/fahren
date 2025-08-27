@@ -18,7 +18,7 @@ export default function HomePage() {
           <div>
             <h1 className="font-display text-4xl md:text-6xl text-white text-glow">El futuro ya está disponible</h1>
             <div className="mt-6">
-              <Link href="/drop" className="focus-ring inline-block rounded-full bg-neon-violet px-8 py-3 font-semibold text-black shadow-glow hover:bg-neon-violet/90">
+              <Link href="/novedades" className="focus-ring inline-block rounded-full bg-neon-violet px-8 py-3 font-semibold text-black shadow-glow hover:bg-neon-violet/90">
                 Comprar ya
               </Link>
             </div>
@@ -31,7 +31,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-2xl text-white">Recientes</h2>
-            <Link href="/drop" className="text-sm text-neon-violet hover:underline">Ver último drop</Link>
+            <Link href="/novedades" className="text-sm text-neon-violet hover:underline">Ver novedades</Link>
           </div>
           <Carousel>
             {Array.from({length:10}).map((_,i)=> (
