@@ -31,41 +31,37 @@ export default function NovedadesPage() {
             ))}
           </Carousel>
 
-          {/* Botones diagonales de categorías */}
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-            {[
-              ['buzos','/productos/buzos'],
-              ['remeras','/productos/remeras'],
-              ['jeans','/productos/jeans'],
-              ['camperas','/productos/camperas'],
-              ['gorros','/productos/gorros'],
-              ['joggers','/productos/joggers'],
-              ['accesorios','/productos/accesorios'],
-            ].map(([label,href]) => (
-              <div key={label}>
-                <Link href={href} className="block">
-                  <div className="relative overflow-hidden rounded-2xl border border-white/10">
-                    <div className="relative h-32 w-full origin-center -skew-x-6">
-                      <img src="/hero-fallback.jpg" alt={String(label)} className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-[2px]" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
-                    </div>
-                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                      <span className="font-display text-xl text-white capitalize drop-shadow">{String(label)}</span>
+          {/* CTA único para explorar productos */}
+          <div className="mt-12 text-center">
+            <Link href="/productos" className="focus-ring inline-block rounded-full bg-neon-violet px-8 py-3 font-semibold text-black shadow-glow hover:bg-neon-violet/90">
+              Explorar productos
+            </Link>
+          </div>
+
+          {/* Mini carrusel de categorías */}
+          <div className="mt-8">
+            <Carousel>
+              {[
+                ['remeras','/productos/remeras'],
+                ['camperas','/productos/camperas'],
+                ['jeans','/productos/jeans'],
+                ['buzos','/productos/buzos'],
+                ['joggers','/productos/joggers'],
+                ['gorros','/productos/gorros'],
+                ['accesorios','/productos/accesorios'],
+              ].map(([label,href]) => (
+                <Link key={label} href={href} className="group w-28 shrink-0 snap-start">
+                  <div className="relative aspect-square overflow-hidden rounded-lg border border-white/10">
+                    <img src="/hero-fallback.jpg" alt={String(label)} className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-[1px]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/40" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-sm text-white capitalize drop-shadow">{String(label)}</span>
                     </div>
                   </div>
+                  <div className="mt-1 text-center text-xs text-metal-300/90 capitalize">{String(label)}</div>
                 </Link>
-                {/* Previews de productos por categoría (fila horizontal con flechas) */}
-                <div className="mt-3">
-                  <Carousel>
-                    {Array.from({length:8}).map((_,i)=> (
-                      <Link key={i} href={`/producto/${i+1}`} className="group w-24 shrink-0 snap-start">
-                        <div className="aspect-square rounded-md border border-white/5 bg-carbon-800/40" />
-                      </Link>
-                    ))}
-                  </Carousel>
-                </div>
-              </div>
-            ))}
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>
