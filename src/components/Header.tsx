@@ -50,8 +50,7 @@ export function Header() {
               <input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Buscar" className="w-full bg-transparent text-sm text-metal-200 placeholder-metal-400 focus:outline-none" />
             </div>
             <nav className="mt-6 space-y-1 text-metal-300/90">
-              <Link href="/novedades" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Novedades</Link>
-              <Link href="/todos-los-productos" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Todos los productos</Link>
+              <Link href="/" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Inicio</Link>
 
               <button aria-expanded={openProductos} onClick={() => setOpenProductos(v=>!v)} className="flex w-full items-center justify-between rounded px-2 py-2 text-left hover:bg-carbon-800 hover:text-white">
                 <span>Productos</span>
@@ -78,7 +77,11 @@ export function Header() {
                 </div>
               )}
 
-              <Link href="/archivo" className="mt-1 block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Archivo</Link>
+              <Link href="/guia-de-talles" className="mt-1 block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Guía de talles</Link>
+              <Link href="/contacto" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Contacto</Link>
+              <Link href="/preguntas-frecuentes" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Preguntas frecuentes</Link>
+              <Link href="/politica-de-cambios" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Política de cambios</Link>
+              <Link href="/sobre-nosotros" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Sobre nosotros</Link>
             </nav>
           </div>
         </>
