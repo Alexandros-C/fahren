@@ -18,7 +18,7 @@ export function Header() {
   }, [])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-carbon-900/70 backdrop-blur">
+    <header className="fixed inset-x-0 top-0 z-50 bg-carbon-900 border-b border-white/10 shadow-md">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-14 items-center justify-between">
           <button aria-label="Abrir menú" onClick={() => setOpen(true)} className="focus-ring inline-flex items-center justify-center rounded-full p-2 text-metal-200 hover:text-white">
@@ -58,7 +58,7 @@ export function Header() {
                 <ChevronDown className={`h-4 w-4 transition ${openProductos ? 'rotate-180' : ''}`} />
               </button>
               {openProductos && (
-                <div className="ml-2 space-y-1 rounded-lg bg-carbon-800/70 p-2">
+                <div className="ml-2 space-y-1 rounded-lg bg-carbon-800 p-2">
                   {[
                     ['remeras','Remeras'],
                     ['buzos','Buzos'],
