@@ -13,7 +13,7 @@ export default function NovedadesPage() {
           {/* Último drop en cuadrilla */}
           <div className="mb-6 flex items-center justify-between">
             <h2 className="font-display text-3xl text-white">Último drop</h2>
-            <Link href="/productos" className="text-sm text-neon-violet hover:underline">Ver todo</Link>
+            <Link href="/todos-los-productos" className="text-sm text-neon-violet hover:underline">Ver todo</Link>
           </div>
           <div className="grid grid-cols-2 gap-6">
             {Array.from({length:6}).map((_,i)=> (
