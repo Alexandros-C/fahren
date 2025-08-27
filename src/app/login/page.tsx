@@ -2,11 +2,13 @@
 import { signIn } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -40,7 +42,12 @@ export default function LoginPage() {
             return onSubmit(e)
           }} className="mt-6 space-y-3">
             <input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="Correo" className="w-full rounded-lg bg-carbon-800 px-4 py-2 text-metal-200 placeholder-metal-400" />
-            <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="Contraseña" className="w-full rounded-lg bg-carbon-800 px-4 py-2 text-metal-200 placeholder-metal-400" />
+            <div className="relative">
+              <input value={password} onChange={e=>setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="Contraseña" className="w-full rounded-lg bg-carbon-800 px-4 py-2 pr-10 text-metal-200 placeholder-metal-400" />
+              <button type="button" onClick={()=>setShowPassword(v=>!v)} aria-label={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'} className="absolute right-2 top-1/2 -translate-y-1/2 text-metal-300 hover:text-white">
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
             <label className="flex items-center gap-2 text-sm text-metal-300/90">
               <input type="checkbox" checked={remember} onChange={(e)=>setRemember(e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-carbon-800" />
               Recordarme
