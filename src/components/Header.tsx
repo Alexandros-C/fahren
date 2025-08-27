@@ -38,7 +38,7 @@ export function Header() {
       {open && (
         <>
           <div className="fixed inset-0 z-40 bg-black/60" onClick={() => setOpen(false)} />
-          <div ref={panelRef} className="fixed left-0 top-0 z-50 h-full w-80 max-w-[85%] border-r border-white/10 bg-carbon-900/95 backdrop-blur p-4 shadow-glow">
+          <div ref={panelRef} className="fixed left-0 top-0 z-50 h-full w-80 max-w-[85%] border-r border-white/10 bg-carbon-900 p-4 shadow-glow">
             <div className="flex items-center justify-between">
               <span className="font-display text-white">Navegación</span>
               <button aria-label="Cerrar" onClick={() => setOpen(false)} className="focus-ring rounded-full p-2 text-metal-200 hover:text-white">

@@ -12,7 +12,7 @@ export default function Footer() {
             <p className="mt-2 text-sm text-metal-300/80">Cyber-Renaissance — El futuro ya está disponible.</p>
             <div className="mt-4 flex items-center gap-3">
               <a
-                href="https://instagram.com/fahren"
+                href="https://www.instagram.com/fahren.brand?igsh=MXduMjFldXFwZGR1dQ=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="focus-ring inline-flex items-center gap-2 rounded-full bg-carbon-800 px-3 py-2 text-metal-200 hover:text-white"
