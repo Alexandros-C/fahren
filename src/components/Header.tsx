@@ -57,6 +57,8 @@ export function Header() {
             <nav className="mt-6 space-y-1 text-metal-300/90">
               <Link href="/" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Inicio</Link>
 
+              <Link href="/perfil" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Ingresar / Registrarse</Link>
+
               <button aria-expanded={openProductos} onClick={() => setOpenProductos(v=>!v)} className="flex w-full items-center justify-between rounded px-2 py-2 text-left hover:bg-carbon-800 hover:text-white">
                 <span>Productos</span>
                 <ChevronDown className={`h-4 w-4 transition ${openProductos ? 'rotate-180' : ''}`} />

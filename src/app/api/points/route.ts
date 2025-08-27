@@ -7,6 +7,8 @@ export async function POST(req: Request) {
   const session: any = await getServerSession(authOptions as any)
   if (!session?.user) return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   const { amount } = await req.json()
+  const dbUser = await prisma.user.findUnique({ where: { id: session.user.id } })
+  if (!dbUser?.emailVerified) return NextResponse.json({ error: 'Email no verificado' }, { status: 403 })
   const updated = await prisma.user.update({ where: { id: session.user.id }, data: { points: { increment: Number(amount) || 0 } } })
   return NextResponse.json({ points: updated.points })
 }
