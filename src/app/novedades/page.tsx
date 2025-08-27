@@ -10,14 +10,14 @@ export default function NovedadesPage() {
     <main>
       <section className="pt-20 px-4">
         <div className="mx-auto max-w-7xl">
-          {/* Carrusel Último drop */}
+          {/* Último drop en cuadrilla */}
           <div className="mb-6 flex items-center justify-between">
             <h2 className="font-display text-3xl text-white">Último drop</h2>
             <Link href="/productos" className="text-sm text-neon-violet hover:underline">Ver todo</Link>
           </div>
-          <Carousel>
+          <div className="grid grid-cols-2 gap-6">
             {Array.from({length:6}).map((_,i)=> (
-              <Link key={i} href={`/producto/${i+1}`} className="group w-64 shrink-0 snap-start">
+              <Link key={i} href={`/producto/${i+1}`} className="group">
                 <div className="relative aspect-[1/1] overflow-hidden rounded-xl border border-white/5 bg-carbon-800/40">
                   <Suspense fallback={<div className="h-full w-full bg-carbon-700" />}> 
                     <Rotator colorIndex={i % 3} />
@@ -29,7 +29,7 @@ export default function NovedadesPage() {
                 </div>
               </Link>
             ))}
-          </Carousel>
+          </div>
 
           {/* CTA único para explorar productos */}
           <div className="mt-12 text-center">
