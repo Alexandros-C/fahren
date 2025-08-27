@@ -77,7 +77,7 @@ export default function HomeFeed() {
         <div className="mx-auto max-w-7xl">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-2xl text-white">Más vendidos</h2>
-            <Link href="/catalogo" className="text-sm text-neon-violet hover:underline">Ver catálogo</Link>
+            <Link href="/todos-los-productos" className="text-sm text-neon-violet hover:underline">Ver todo</Link>
           </div>
           <Carousel>
             {best.map((p: any, i: number)=> (
@@ -93,7 +93,7 @@ export default function HomeFeed() {
                 </div>
               </Link>
             ))}
-            <Link href="/catalogo" className="group w-56 shrink-0 snap-start">
+            <Link href="/todos-los-productos" className="group w-56 shrink-0 snap-start">
               <div className="relative aspect-square overflow-hidden rounded-xl border border-dashed border-white/20 bg-carbon-800/30 flex items-center justify-center">
                 <span className="text-white">Ver todo</span>
               </div>

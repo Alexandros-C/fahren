@@ -11,7 +11,7 @@ export default function CartPage() {
             <p className="text-metal-300/80">Tu inventario está vacío.</p>
           </div>
           <div className="mt-6 flex items-center justify-end gap-3">
-            <Link href="/catalogo" className="rounded-full bg-carbon-700 px-6 py-3 text-metal-200">Explorar catálogo</Link>
+            <Link href="/todos-los-productos" className="rounded-full bg-carbon-700 px-6 py-3 text-metal-200">Explorar productos</Link>
             <button className="rounded-full bg-neon-violet px-6 py-3 font-semibold text-black">Confirmar envío</button>
           </div>
           <p className="mt-2 text-xs text-metal-300/70">Confirmá tu envío — el resto, nosotros lo hacemos eterno.</p>

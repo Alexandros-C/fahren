@@ -51,7 +51,7 @@ export function Header() {
             </div>
             <nav className="mt-6 space-y-1 text-metal-300/90">
               <Link href="/novedades" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Novedades</Link>
-              <Link href="/catalogo" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Catálogo</Link>
+              <Link href="/todos-los-productos" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Todos los productos</Link>
 
               <button aria-expanded={openProductos} onClick={() => setOpenProductos(v=>!v)} className="flex w-full items-center justify-between rounded px-2 py-2 text-left hover:bg-carbon-800 hover:text-white">
                 <span>Productos</span>
@@ -59,6 +59,9 @@ export function Header() {
               </button>
               {openProductos && (
                 <div className="ml-2 space-y-1 rounded-lg bg-carbon-800 p-2">
+                  <Link href={`/todos-los-productos`} className="block rounded px-2 py-1 text-sm hover:bg-carbon-700 hover:text-white" onClick={()=>setOpen(false)}>
+                    Todos los productos
+                  </Link>
                   {[
                     ['remeras','Remeras'],
                     ['buzos','Buzos'],

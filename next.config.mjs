@@ -18,6 +18,7 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/drop', destination: '/novedades', permanent: true },
+      { source: '/catalogo', destination: '/todos-los-productos', permanent: true },
     ]
   }
 };
