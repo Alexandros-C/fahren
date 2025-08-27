@@ -34,7 +34,7 @@ export default function HomePage() {
             <Link href="/novedades" className="text-sm text-neon-violet hover:underline">Ver novedades</Link>
           </div>
           <Carousel>
-            {Array.from({length:10}).map((_,i)=> (
+            {Array.from({length:5}).map((_,i)=> (
               <Link key={i} href={`/producto/${i+1}`} className="group w-64 shrink-0 snap-start">
                 <div className="relative aspect-[1/1] overflow-hidden rounded-xl border border-white/5 bg-carbon-800/40">
                   <Suspense fallback={<div className="h-full w-full bg-carbon-700" />}> 
@@ -47,6 +47,11 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
+            <Link href="/novedades" className="group w-64 shrink-0 snap-start">
+              <div className="relative aspect-[1/1] overflow-hidden rounded-xl border border-dashed border-white/20 bg-carbon-800/30 flex items-center justify-center">
+                <span className="text-white">Ver todo</span>
+              </div>
+            </Link>
           </Carousel>
         </div>
       </section>
@@ -64,7 +69,7 @@ export default function HomePage() {
               ['joggers','/productos/joggers'],
               ['gorros','/productos/gorros'],
               ['accesorios','/productos/accesorios'],
-            ].map(([label,href]) => (
+            ].slice(0,5).map(([label,href]) => (
               <Link key={label} href={href} className="group w-28 shrink-0 snap-start">
                 <div className="relative aspect-square overflow-hidden rounded-lg border border-white/10">
                   <img src="/hero-fallback.jpg" alt={String(label)} className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-[1px]" />
@@ -76,6 +81,12 @@ export default function HomePage() {
                 <div className="mt-1 text-center text-xs text-metal-300/90 capitalize">{String(label)}</div>
               </Link>
             ))}
+            <Link href="/productos" className="group w-28 shrink-0 snap-start">
+              <div className="relative aspect-square overflow-hidden rounded-lg border border-dashed border-white/20 bg-carbon-800/30 flex items-center justify-center">
+                <span className="text-white text-sm">Ver todo</span>
+              </div>
+              <div className="mt-1 text-center text-xs text-metal-300/90">&nbsp;</div>
+            </Link>
           </Carousel>
         </div>
       </section>
@@ -88,7 +99,7 @@ export default function HomePage() {
             <Link href="/catalogo" className="text-sm text-neon-violet hover:underline">Ver catálogo</Link>
           </div>
           <Carousel>
-            {Array.from({length:8}).map((_,i)=> (
+            {Array.from({length:5}).map((_,i)=> (
               <Link key={i} href={`/producto/${i+11}`} className="group w-56 shrink-0 snap-start">
                 <div className="relative aspect-square overflow-hidden rounded-xl border border-white/5 bg-carbon-800/40">
                   <Suspense fallback={<div className="h-full w-full bg-carbon-700" />}> 
@@ -101,6 +112,11 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
+            <Link href="/catalogo" className="group w-56 shrink-0 snap-start">
+              <div className="relative aspect-square overflow-hidden rounded-xl border border-dashed border-white/20 bg-carbon-800/30 flex items-center justify-center">
+                <span className="text-white">Ver todo</span>
+              </div>
+            </Link>
           </Carousel>
         </div>
       </section>
@@ -114,7 +130,7 @@ export default function HomePage() {
           </a>
           <div className="mt-3">
             <Carousel>
-              {Array.from({length:10}).map((_,i)=> (
+              {Array.from({length:3}).map((_,i)=> (
                 <a key={i} href="https://www.instagram.com/fahren.brand?igsh=MXduMjFldXFwZGR1dQ==" target="_blank" rel="noopener noreferrer" className="w-28 shrink-0 snap-start">
                   <div className="relative aspect-square overflow-hidden rounded-lg border border-white/10">
                     <img src="/hero-fallback.jpg" alt={`Post ${i+1}`} className="absolute inset-0 h-full w-full object-cover" />
