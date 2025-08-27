@@ -1,10 +1,13 @@
 "use client"
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
+  const { status } = useSession()
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
@@ -20,6 +23,10 @@ export default function LoginPage() {
       }
     } catch {}
   }, [])
+
+  useEffect(() => {
+    if (status === 'authenticated') router.replace('/perfil')
+  }, [status, router])
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
