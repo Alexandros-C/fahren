@@ -1,11 +1,12 @@
 "use client"
 import Link from 'next/link'
-import { ShoppingCart, Search, Menu, X } from 'lucide-react'
+import { ShoppingCart, Search, Menu, X, ChevronDown } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const [q, setQ] = useState('')
+  const [openProductos, setOpenProductos] = useState(true)
   const panelRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export function Header() {
       {open && (
         <>
           <div className="fixed inset-0 z-40 bg-black/60" onClick={() => setOpen(false)} />
-          <div ref={panelRef} className="fixed left-0 top-0 z-50 h-full w-80 max-w-[85%] border-r border-white/10 bg-carbon-900 p-4 shadow-glow">
+          <div ref={panelRef} className="fixed left-0 top-0 z-50 h-full w-80 max-w-[85%] border-r border-white/10 bg-carbon-900/95 backdrop-blur p-4 shadow-glow">
             <div className="flex items-center justify-between">
               <span className="font-display text-white">Navegación</span>
               <button aria-label="Cerrar" onClick={() => setOpen(false)} className="focus-ring rounded-full p-2 text-metal-200 hover:text-white">
@@ -48,11 +49,33 @@ export function Header() {
               <Search className="h-4 w-4 text-metal-400" />
               <input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Buscar" className="w-full bg-transparent text-sm text-metal-200 placeholder-metal-400 focus:outline-none" />
             </div>
-            <nav className="mt-6 space-y-3 text-metal-300/90">
-              <Link href="/drop" className="block rounded px-2 py-1 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Último Drop</Link>
-              <Link href="/catalogo" className="block rounded px-2 py-1 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Catálogo</Link>
-              <Link href="/accesorios" className="block rounded px-2 py-1 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Accesorios</Link>
-              <Link href="/archivo" className="block rounded px-2 py-1 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Archivo</Link>
+            <nav className="mt-6 space-y-1 text-metal-300/90">
+              <Link href="/drop" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Último Drop</Link>
+              <Link href="/catalogo" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Catálogo</Link>
+
+              <button aria-expanded={openProductos} onClick={() => setOpenProductos(v=>!v)} className="flex w-full items-center justify-between rounded px-2 py-2 text-left hover:bg-carbon-800 hover:text-white">
+                <span>Productos</span>
+                <ChevronDown className={`h-4 w-4 transition ${openProductos ? 'rotate-180' : ''}`} />
+              </button>
+              {openProductos && (
+                <div className="ml-2 space-y-1 rounded-lg bg-carbon-800/70 p-2">
+                  {[
+                    ['remeras','Remeras'],
+                    ['buzos','Buzos'],
+                    ['camperas','Camperas'],
+                    ['gorros','Gorros'],
+                    ['jeans','Jeans'],
+                    ['joggers','Joggers'],
+                    ['accesorios','Accesorios'],
+                  ].map(([slug,label]) => (
+                    <Link key={slug} href={`/productos/${slug}`} className="block rounded px-2 py-1 text-sm hover:bg-carbon-700 hover:text-white" onClick={()=>setOpen(false)}>
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              <Link href="/archivo" className="mt-1 block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Archivo</Link>
             </nav>
           </div>
         </>
