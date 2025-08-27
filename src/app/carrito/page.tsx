@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link'
 
 export default function CartPage() {
@@ -12,7 +13,9 @@ export default function CartPage() {
           </div>
           <div className="mt-6 flex items-center justify-end gap-3">
             <Link href="/todos-los-productos" className="rounded-full bg-carbon-700 px-6 py-3 text-metal-200">Explorar productos</Link>
-            <button className="rounded-full bg-neon-violet px-6 py-3 font-semibold text-black">Confirmar envío</button>
+            <button onClick={async ()=>{
+              try { await fetch('/api/points', { method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ amount: 10 }) }) } catch {}
+            }} className="rounded-full bg-neon-violet px-6 py-3 font-semibold text-black">Confirmar envío</button>
           </div>
           <p className="mt-2 text-xs text-metal-300/70">Confirmá tu envío — el resto, nosotros lo hacemos eterno.</p>
         </div>

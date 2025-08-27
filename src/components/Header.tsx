@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import { ShoppingCart, Search, Menu, X, ChevronDown } from 'lucide-react'
+import { ShoppingCart, Search, Menu, X, ChevronDown, User } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 export function Header() {
@@ -27,11 +27,16 @@ export function Header() {
           <Link href="/" className="select-none">
             <span className="font-display text-xl md:text-2xl text-white animate-glitch">Fahren</span>
           </Link>
-          <Link href="/carrito" className="relative inline-flex items-center rounded-full bg-carbon-800/80 px-3 py-1.5 text-metal-200 backdrop-blur transition hover:bg-carbon-800">
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            <span className="text-sm">Inventario</span>
-            <span className="ml-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-neon-violet px-1 text-xs font-semibold text-black">0</span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/perfil" className="relative inline-flex items-center rounded-full bg-carbon-800/80 px-3 py-1.5 text-metal-200 backdrop-blur transition hover:bg-carbon-800">
+              <User className="h-4 w-4" />
+            </Link>
+            <Link href="/carrito" className="relative inline-flex items-center rounded-full bg-carbon-800/80 px-3 py-1.5 text-metal-200 backdrop-blur transition hover:bg-carbon-800">
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              <span className="text-sm">Inventario</span>
+              <span className="ml-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-neon-violet px-1 text-xs font-semibold text-black">0</span>
+            </Link>
+          </div>
         </div>
       </div>
 
