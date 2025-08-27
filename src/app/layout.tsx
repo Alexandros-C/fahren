@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import AiStylistPanel from '@/components/AiStylistPanel'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Fahren — Cyber-Renaissance Store',
@@ -12,7 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" className="h-full">
       <body className="min-h-full font-ui">
-        {children}
+        <div className="min-h-screen">
+          {children}
+        </div>
+        <Footer />
         <AiStylistPanel />
       </body>
     </html>
