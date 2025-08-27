@@ -50,7 +50,7 @@ export default function LoginPage() {
             </div>
             <label className="flex items-center gap-2 text-sm text-metal-300/90">
               <input type="checkbox" checked={remember} onChange={(e)=>setRemember(e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-carbon-800" />
-              Recordarme
+              Mantener sesión iniciada
             </label>
             {error && <p className="text-sm text-red-400">{error}</p>}
             <div className="mt-2 grid grid-cols-2 gap-3">
