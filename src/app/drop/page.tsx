@@ -7,7 +7,7 @@ export default function DropPage() {
         <div className="mx-auto max-w-6xl">
           <h2 className="font-display text-3xl text-white">Drop actual</h2>
           <p className="mt-2 text-metal-300/80">Selección curada con estética Cyber-Renaissance.</p>
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-2 gap-6">
             {Array.from({length:6}).map((_,i)=> (
               <Link key={i} href={`/producto/${i+1}`} className="group relative overflow-hidden rounded-xl border border-white/5 bg-carbon-800/40 p-4 transition hover:border-neon-violet/30">
                 <div className="aspect-square rounded-lg bg-gradient-to-br from-carbon-700 to-carbon-900" />
