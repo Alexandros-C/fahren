@@ -58,6 +58,9 @@ export default function LoginPage() {
               <button type="submit" className="rounded-full bg-neon-violet px-6 py-3 font-semibold text-black">Iniciar sesión</button>
             </div>
           </form>
+          <div className="mt-3 text-center">
+            <Link href="/recuperar" className="text-sm text-neon-violet hover:underline">Olvidé mi contraseña</Link>
+          </div>
         </div>
       </section>
     </main>
