@@ -13,7 +13,6 @@ export default function AiStylistPanel() {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [style, setStyle] = useState<'minimal'|'tech'|'urbano'|null>(null)
   const { cart, category } = useShop()
   const [suggestions, setSuggestions] = useState<Array<{id:string;title:string;price:number;image?:string;category?:string}>>([])
 
@@ -29,7 +28,7 @@ export default function AiStylistPanel() {
       const res = await fetch('/api/ai-stylist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next, context: { cart, category }, style })
+        body: JSON.stringify({ messages: next, context: { cart, category } })
       })
       const data = await res.json()
       const content: string = data?.content || 'No tengo una sugerencia en este momento.'
@@ -83,11 +82,7 @@ export default function AiStylistPanel() {
           </div>
         </div>
       )}
-      <div className="mb-2 flex justify-end gap-2">
-        {(['minimal','tech','urbano'] as const).map(s => (
-          <button key={s} onClick={()=>setStyle(prev => prev===s ? null : s)} className={`rounded-full px-3 py-1 text-xs ${style===s ? 'bg-neon-violet text-black' : 'bg-carbon-800 text-metal-200'}`}>{s}</button>
-        ))}
-      </div>
+      
       <button onClick={()=>setOpen(o=>!o)} className="focus-ring inline-flex items-center gap-2 rounded-full bg-neon-violet px-4 py-3 font-semibold text-black shadow-glow">
         <Sparkles className="h-4 w-4" />
         Estilista IA

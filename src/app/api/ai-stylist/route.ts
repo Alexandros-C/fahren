@@ -46,7 +46,7 @@ async function getCandidateProducts(category?: string | null): Promise<Product[]
 
 export async function POST(req: Request) {
   try {
-    const { messages, context, style } = (await req.json()) as { messages: ChatMessage[]; context?: Context; style?: string }
+    const { messages, context } = (await req.json()) as { messages: ChatMessage[]; context?: Context }
     if (!Array.isArray(messages)) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
     }
@@ -57,14 +57,13 @@ export async function POST(req: Request) {
     const systemPrompt: ChatMessage = {
       role: 'system',
       content:
-        'Sos el estilista de Fahren. Respondé en español, breve y accionable. Sugerí combinaciones y accesorios coherentes con el carrito y la estética Cyber-Renaissance (negros, metálicos, acentos neón). Prioridad a performance y legibilidad. No inventes funcionalidades que no existen.'
+        'Sos el estilista de Fahren. Tono empático y consultivo, orientado a cerrar venta sin presión. Respondé en español rioplatense, breve, concreto y variado (evitá repetir fórmulas). 1) Reconocé lo que pide la persona, 2) sugerí 1-2 looks con razones (color/caída/contraste), 3) ofrecé 1 complemento, 4) cerrá con una pregunta que ayude a afinar (talle, fit, clima). Prioridad a claridad, estética Cyber-Renaissance, performance. No inventes features ni disponibilidad.'
     }
 
     const payload = {
       model,
       messages: [
         systemPrompt,
-        ...(style ? [{ role: 'system', content: `Preferencia de estilo: ${style}` } as ChatMessage] : []),
         ...(context?.category ? [{ role: 'system', content: `Categoría actual: ${context.category}` } as ChatMessage] : []),
         ...(context?.cart && context.cart.length
           ? [{ role: 'system', content: `Carrito: ${context.cart.map(c=>`${c.title} ($${c.price})`).join(', ')}` } as ChatMessage]
@@ -72,6 +71,8 @@ export async function POST(req: Request) {
         ...messages,
       ].slice(-12),
       temperature: 0.9,
+      presence_penalty: 0.3,
+      frequency_penalty: 0.5,
       max_tokens: 220
     }
 
@@ -96,12 +97,11 @@ export async function POST(req: Request) {
     }
 
     if (!apiKey) {
-      // Fallback sin clave: respuesta dinámica basada en estilo, categoría, última consulta y sugerencias
+      // Fallback sin clave: respuesta dinámica basada en categoría, última consulta y sugerencias
       const sample = suggestions.slice(0, 3).map(s => `${s.title} ($${s.price})`).join(', ')
-      const styleHint = style ? ` Estilo: ${style}.` : ''
       const catHint = context?.category ? ` Categoría: ${context.category}.` : ''
       const queryHint = userLast ? ` Pedido: "${userLast}".` : ''
-      const content = `Te armo algo rápido.${styleHint}${catHint}${queryHint} Probá combinar ${sample}. Sumá un accesorio para contraste. Si querés, decime color o textura y afino.`
+      const content = `Anotado.${catHint}${queryHint} Te propongo ${sample}. Sumá un accesorio para contraste. ¿Preferís fit relajado o entallado?`
       return NextResponse.json({ content, suggestions }, { headers: { 'x-ai-used': 'fallback' } })
     }
 
