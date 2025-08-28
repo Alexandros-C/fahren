@@ -40,12 +40,13 @@ export default function Carousel({ children }: CarouselProps) {
     const onScroll = () => {
       if (isAdjustingRef.current) return
       const left = el.scrollLeft
-      if (left < segmentWidth * 0.5) {
+      // Umbrales amplios para evitar rebotes cuando el usuario navega
+      if (left < segmentWidth * 0.05) {
         // Pasó al bloque inicial (A) -> reubicar a bloque central (B)
         isAdjustingRef.current = true
         el.scrollTo({ left: left + segmentWidth, behavior: 'auto' })
         isAdjustingRef.current = false
-      } else if (left > segmentWidth * 2.5) {
+      } else if (left > segmentWidth * 2.95) {
         // Pasó al bloque final (C) -> reubicar a bloque central (B)
         isAdjustingRef.current = true
         el.scrollTo({ left: left - segmentWidth, behavior: 'auto' })
