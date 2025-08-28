@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 type CarouselProps = {
@@ -18,15 +18,27 @@ export default function Carousel({ children }: CarouselProps) {
     setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 1)
   }
 
-  useEffect(() => {
-    // Reset al inicio del carrusel
+  useLayoutEffect(() => {
+    // Asegura posición inicial antes de pintar
     const el = viewportRef.current
-    if (el) el.scrollLeft = 0
+    if (el) el.scrollTo({ left: 0, behavior: 'auto' })
     update()
+  }, [])
+
+  useEffect(() => {
+    const el = viewportRef.current
     if (!el) return
+    // Refuerzo post-montaje por si hay contenido async/hidratación
+    const id = setTimeout(() => {
+      el.scrollTo({ left: 0, behavior: 'auto' })
+      update()
+    }, 0)
     const onScroll = () => update()
     el.addEventListener('scroll', onScroll, { passive: true })
-    return () => el.removeEventListener('scroll', onScroll)
+    return () => {
+      clearTimeout(id)
+      el.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   const scrollBy = (dir: number) => {
