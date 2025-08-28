@@ -85,7 +85,15 @@ export async function POST(req: Request) {
       return { p, score }
     })
     scored.sort((a,b) => b.score - a.score || (+new Date(b.p.createdAt) - +new Date(a.p.createdAt)))
-    const suggestions = scored.slice(0, 6).map(({ p }) => ({ id: p.id, title: p.title, price: p.price, image: p.image, category: p.category }))
+    let suggestions = scored.slice(0, 3).map(({ p }) => ({ id: p.id, title: p.title, price: p.price, image: p.image, category: p.category }))
+    if (suggestions.length === 0) {
+      // Priorizar best-sellers si no hay match
+      const fallbacks = [...candidates].filter(p => p.isBestSeller)
+        .sort((a,b) => (+new Date(b.createdAt) - +new Date(a.createdAt)))
+        .slice(0, 3)
+        .map(p => ({ id: p.id, title: p.title, price: p.price, image: p.image, category: p.category }))
+      suggestions = fallbacks
+    }
 
     if (!apiKey) {
       // Fallback sin clave: respuesta simulada con sugerencias
