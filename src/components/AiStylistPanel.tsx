@@ -15,6 +15,7 @@ export default function AiStylistPanel() {
   const [loading, setLoading] = useState(false)
   const [style, setStyle] = useState<'minimal'|'tech'|'urbano'|null>(null)
   const { cart, category } = useShop()
+  const [suggestions, setSuggestions] = useState<Array<{id:string;title:string;price:number;image?:string;category?:string}>>([])
 
   const send = async () => {
     const value = String(input ?? '')
@@ -32,6 +33,7 @@ export default function AiStylistPanel() {
       })
       const data = await res.json()
       const content: string = data?.content || 'No tengo una sugerencia en este momento.'
+      setSuggestions(Array.isArray(data?.suggestions) ? data.suggestions : [])
       setMessages([...next, { role: 'assistant' as const, content }])
     } catch {
       setMessages([...next, { role: 'assistant' as const, content: 'Hubo un problema al generar la sugerencia. Intentá de nuevo.' }])
@@ -51,6 +53,26 @@ export default function AiStylistPanel() {
                 <span>{m.content}</span>
               </div>
             ))}
+            {suggestions.length > 0 && (
+              <div className="mt-2 space-y-2">
+                <div className="text-xs uppercase tracking-wider text-metal-400">Sugerencias</div>
+                <div className="grid grid-cols-2 gap-3">
+                  {suggestions.map((s, i) => (
+                    <div key={s.id ?? i} className="rounded-lg border border-white/10 bg-carbon-800/60 p-2">
+                      <div className="aspect-square overflow-hidden rounded-md bg-carbon-700">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={s.image || '/hero-fallback.jpg'} alt={s.title} className="h-full w-full object-cover" />
+                      </div>
+                      <div className="mt-2 text-xs text-white line-clamp-2">{s.title}</div>
+                      <div className="flex items-center justify-between mt-1">
+                        {s.price != null && <span className="text-[11px] text-neon-violet">$ {s.price}</span>}
+                        <button onClick={()=>useShop.getState().addToCart({ id: String(s.id), title: s.title, price: s.price, image: s.image })} className="rounded-full bg-neon-violet px-2 py-1 text-[10px] font-semibold text-black">Añadir</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-2 border-t border-white/10 p-3">
             <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Pedí una sugerencia" className="focus-ring flex-1 rounded-full bg-carbon-700 px-3 py-2 text-sm text-metal-200 placeholder-metal-400" />
