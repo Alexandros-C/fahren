@@ -66,7 +66,10 @@ export default function AiStylistPanel() {
                       <div className="mt-2 text-xs text-white line-clamp-2">{s.title}</div>
                       <div className="flex items-center justify-between mt-1">
                         {s.price != null && <span className="text-[11px] text-neon-violet">$ {s.price}</span>}
-                        <button onClick={()=>useShop.getState().addToCart({ id: String(s.id), title: s.title, price: s.price, image: s.image })} className="rounded-full bg-neon-violet px-2 py-1 text-[10px] font-semibold text-black">Añadir</button>
+                        <div className="flex gap-1">
+                          <a href={`/producto/${s.id}`} className="rounded-full bg-carbon-700 px-2 py-1 text-[10px] text-white border border-white/10">Ver</a>
+                          <button onClick={()=>useShop.getState().addToCart({ id: String(s.id), title: s.title, price: s.price, image: s.image })} className="rounded-full bg-neon-violet px-2 py-1 text-[10px] font-semibold text-black">Añadir</button>
+                        </div>
                       </div>
                     </div>
                   ))}
