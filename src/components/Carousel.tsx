@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useState, useEffect, useLayoutEffect } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect, Children } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 type CarouselProps = {
@@ -10,36 +10,53 @@ export default function Carousel({ children }: CarouselProps) {
   const viewportRef = useRef<HTMLDivElement | null>(null)
   const [canPrev, setCanPrev] = useState(false)
   const [canNext, setCanNext] = useState(true)
+  const [segmentWidth, setSegmentWidth] = useState(0)
+  const isAdjustingRef = useRef(false)
 
   const update = () => {
     const el = viewportRef.current
     if (!el) return
-    setCanPrev(el.scrollLeft > 0)
-    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 1)
+    setCanPrev(true)
+    setCanNext(true)
   }
 
   useLayoutEffect(() => {
-    // Asegura posición inicial antes de pintar
     const el = viewportRef.current
-    if (el) el.scrollTo({ left: 0, behavior: 'auto' })
-    update()
+    if (!el) return
+    // Medir y centrar en el segundo bloque (B) para poder ir hacia adelante/atrás en loop
+    requestAnimationFrame(() => {
+      const totalWidth = el.scrollWidth
+      const seg = totalWidth / 3
+      setSegmentWidth(seg)
+      el.scrollTo({ left: seg, behavior: 'auto' })
+      update()
+    })
   }, [])
 
   useEffect(() => {
     const el = viewportRef.current
-    if (!el) return
-    // Refuerzo post-montaje por si hay contenido async/hidratación
-    const id = setTimeout(() => {
-      el.scrollTo({ left: 0, behavior: 'auto' })
+    if (!el || !segmentWidth) return
+
+    const onScroll = () => {
+      if (isAdjustingRef.current) return
+      const left = el.scrollLeft
+      if (left < segmentWidth * 0.5) {
+        // Pasó al bloque inicial (A) -> reubicar a bloque central (B)
+        isAdjustingRef.current = true
+        el.scrollTo({ left: left + segmentWidth, behavior: 'auto' })
+        isAdjustingRef.current = false
+      } else if (left > segmentWidth * 2.5) {
+        // Pasó al bloque final (C) -> reubicar a bloque central (B)
+        isAdjustingRef.current = true
+        el.scrollTo({ left: left - segmentWidth, behavior: 'auto' })
+        isAdjustingRef.current = false
+      }
       update()
-    }, 0)
-    const onScroll = () => update()
-    el.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      clearTimeout(id)
-      el.removeEventListener('scroll', onScroll)
     }
-  }, [])
+
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [segmentWidth])
 
   const scrollBy = (dir: number) => {
     const el = viewportRef.current
@@ -48,10 +65,15 @@ export default function Carousel({ children }: CarouselProps) {
     el.scrollBy({ left: amount, behavior: 'smooth' })
   }
 
+  const base = Children.toArray(children)
+  const looped = [...base, ...base, ...base]
+
   return (
     <div className="relative">
       <div ref={viewportRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {children}
+        {looped.map((child, idx) => (
+          <div key={idx} className="contents">{child as any}</div>
+        ))}
       </div>
       <button aria-label="Anterior" onClick={() => scrollBy(-1)} disabled={!canPrev} className="focus-ring absolute left-0 top-1/2 -translate-y-1/2 rounded-full bg-carbon-800/80 p-2 text-white shadow-md backdrop-blur disabled:opacity-40">
         <ChevronLeft className="h-5 w-5" />

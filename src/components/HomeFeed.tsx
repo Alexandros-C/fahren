@@ -36,11 +36,6 @@ export default function HomeFeed() {
                 </div>
               </Link>
             ))}
-            <Link href="/novedades" className="group w-64 shrink-0 snap-start">
-              <div className="relative aspect-[1/1] overflow-hidden rounded-xl border border-dashed border-white/20 bg-carbon-800/30 flex items-center justify-center">
-                <span className="text-white">Ver todo</span>
-              </div>
-            </Link>
           </Carousel>
         </div>
       </section>
@@ -93,11 +88,6 @@ export default function HomeFeed() {
                 </div>
               </Link>
             ))}
-            <Link href="/todos-los-productos" className="group w-56 shrink-0 snap-start">
-              <div className="relative aspect-square overflow-hidden rounded-xl border border-dashed border-white/20 bg-carbon-800/30 flex items-center justify-center">
-                <span className="text-white">Ver todo</span>
-              </div>
-            </Link>
           </Carousel>
         </div>
       </section>
