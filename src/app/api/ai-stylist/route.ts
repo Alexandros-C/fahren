@@ -71,7 +71,7 @@ export async function POST(req: Request) {
           : []),
         ...messages,
       ].slice(-12),
-      temperature: 0.7,
+      temperature: 0.9,
       max_tokens: 220
     }
 
@@ -96,12 +96,13 @@ export async function POST(req: Request) {
     }
 
     if (!apiKey) {
-      // Fallback sin clave: respuesta simulada con sugerencias
-      return NextResponse.json({
-        content:
-          'Probá una chaqueta técnica negra con remera básica violeta neón y joggers carbón. Sumá gorro minimal y mochila metálica. Para contraste: zapatillas blancas con detalle verde neón.',
-        suggestions
-      })
+      // Fallback sin clave: respuesta dinámica basada en estilo, categoría, última consulta y sugerencias
+      const sample = suggestions.slice(0, 3).map(s => `${s.title} ($${s.price})`).join(', ')
+      const styleHint = style ? ` Estilo: ${style}.` : ''
+      const catHint = context?.category ? ` Categoría: ${context.category}.` : ''
+      const queryHint = userLast ? ` Pedido: "${userLast}".` : ''
+      const content = `Te armo algo rápido.${styleHint}${catHint}${queryHint} Probá combinar ${sample}. Sumá un accesorio para contraste. Si querés, decime color o textura y afino.`
+      return NextResponse.json({ content, suggestions }, { headers: { 'x-ai-used': 'fallback' } })
     }
 
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -119,7 +120,7 @@ export async function POST(req: Request) {
     }
     const data = await res.json()
     const content: string = data.choices?.[0]?.message?.content || ''
-    return NextResponse.json({ content, suggestions })
+    return NextResponse.json({ content, suggestions }, { headers: { 'x-ai-used': 'openai' } })
   } catch (e) {
     return NextResponse.json({ error: (e as Error).message }, { status: 500 })
   }
