@@ -11,16 +11,30 @@ export default function AiStylistPanel() {
     { role: 'assistant', content: 'Soy tu estilista. Decime qué buscás y te sugiero el set ideal.' } as const,
   ])
   const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const send = () => {
+  const send = async () => {
     const value = String(input ?? '')
     const trimmed = value.trim()
-    if (!trimmed) return
+    if (!trimmed || loading) return
     const next: Message[] = [...messages, { role: 'user' as const, content: trimmed }]
-    // Placeholder suggestions logic; integrate real API later
-    const suggestion = 'Combiná la chaqueta Serie V con botas espectro y acento neon.'
-    setMessages([...next, { role: 'assistant' as const, content: suggestion }])
+    setMessages(next)
     setInput('')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/ai-stylist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: next })
+      })
+      const data = await res.json()
+      const content: string = data?.content || 'No tengo una sugerencia en este momento.'
+      setMessages([...next, { role: 'assistant' as const, content }])
+    } catch {
+      setMessages([...next, { role: 'assistant' as const, content: 'Hubo un problema al generar la sugerencia. Intentá de nuevo.' }])
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -37,7 +51,7 @@ export default function AiStylistPanel() {
           </div>
           <div className="flex items-center gap-2 border-t border-white/10 p-3">
             <input value={input} onChange={(e)=>setInput(e.target.value)} placeholder="Pedí una sugerencia" className="focus-ring flex-1 rounded-full bg-carbon-700 px-3 py-2 text-sm text-metal-200 placeholder-metal-400" />
-            <button onClick={send} className="rounded-full bg-neon-violet px-3 py-2 text-sm font-semibold text-black">Enviar</button>
+            <button onClick={send} disabled={loading} className="rounded-full bg-neon-violet px-3 py-2 text-sm font-semibold text-black disabled:opacity-50">{loading ? 'Pensando…' : 'Enviar'}</button>
           </div>
         </div>
       )}
