@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react'
 import { Sparkles } from 'lucide-react'
+import { useShop } from '@/store/shop'
 
 type MessageRole = 'user' | 'assistant'
 type Message = { role: MessageRole; content: string }
@@ -12,6 +13,7 @@ export default function AiStylistPanel() {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const { cart, category } = useShop()
 
   const send = async () => {
     const value = String(input ?? '')
@@ -25,7 +27,7 @@ export default function AiStylistPanel() {
       const res = await fetch('/api/ai-stylist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next })
+        body: JSON.stringify({ messages: next, context: { cart, category } })
       })
       const data = await res.json()
       const content: string = data?.content || 'No tengo una sugerencia en este momento.'

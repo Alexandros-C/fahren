@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 
 type ChatMessage = { role: 'system' | 'user' | 'assistant'; content: string }
+type Context = { cart?: Array<{title:string;price:number;category?:string}>, category?: string | null }
 
 export async function POST(req: Request) {
   try {
-    const { messages } = (await req.json()) as { messages: ChatMessage[] }
+    const { messages, context } = (await req.json()) as { messages: ChatMessage[]; context?: Context }
     if (!Array.isArray(messages)) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
     }
@@ -20,7 +21,14 @@ export async function POST(req: Request) {
 
     const payload = {
       model,
-      messages: [systemPrompt, ...messages].slice(-12),
+      messages: [
+        systemPrompt,
+        ...(context?.category ? [{ role: 'system', content: `Categoría actual: ${context.category}` } as ChatMessage] : []),
+        ...(context?.cart && context.cart.length
+          ? [{ role: 'system', content: `Carrito: ${context.cart.map(c=>`${c.title} ($${c.price})`).join(', ')}` } as ChatMessage]
+          : []),
+        ...messages,
+      ].slice(-12),
       temperature: 0.7,
       max_tokens: 220
     }

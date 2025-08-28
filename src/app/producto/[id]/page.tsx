@@ -2,6 +2,7 @@
 import { useParams } from 'next/navigation'
 import { Header } from '@/components/Header'
 import { useState } from 'react'
+import { useShop } from '@/store/shop'
 
 const COLORS = [
   { name: 'Carbon', value: '#0f1115' },
@@ -13,6 +14,7 @@ const COLORS = [
 export default function ProductPage() {
   const params = useParams()
   const [color, setColor] = useState(COLORS[0].value)
+  const { addToCart } = useShop()
 
   return (
     <main>
@@ -36,7 +38,12 @@ export default function ProductPage() {
                   ))}
                 </div>
               </div>
-              <button className="focus-ring mt-6 w-full rounded-full bg-neon-violet px-6 py-3 font-semibold text-black">Añadir al inventario</button>
+              <button
+                onClick={() => addToCart({ id: String(params?.id ?? '0'), title: `Producto ${params?.id}`, price: 199 })}
+                className="focus-ring mt-6 w-full rounded-full bg-neon-violet px-6 py-3 font-semibold text-black"
+              >
+                Añadir al inventario
+              </button>
               <p className="text-xs text-metal-300/70">Confirmá tu envío — el resto, nosotros lo hacemos eterno.</p>
             </div>
           </div>

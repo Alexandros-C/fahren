@@ -1,4 +1,7 @@
+"use client"
 import ProductsGrid from '@/components/ProductsGrid'
+import { useEffect } from 'react'
+import { useShop } from '@/store/shop'
 
 const titles: Record<string,string> = {
   remeras: 'Remeras',
@@ -12,6 +15,8 @@ const titles: Record<string,string> = {
 
 export default function CategoriaPage({ params }: { params: { categoria: string }}) {
   const title = titles[params.categoria] ?? 'Categoría'
+  const { setCategory } = useShop()
+  useEffect(()=>{ setCategory(params.categoria) ; return ()=>setCategory(null) }, [params.categoria, setCategory])
   return (
     <main>
       <section className="pt-20 px-4">
