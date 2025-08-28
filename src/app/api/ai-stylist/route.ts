@@ -5,7 +5,7 @@ type Context = { cart?: Array<{title:string;price:number;category?:string}>, cat
 
 export async function POST(req: Request) {
   try {
-    const { messages, context } = (await req.json()) as { messages: ChatMessage[]; context?: Context }
+    const { messages, context, style } = (await req.json()) as { messages: ChatMessage[]; context?: Context; style?: string }
     if (!Array.isArray(messages)) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
     }
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
       model,
       messages: [
         systemPrompt,
+        ...(style ? [{ role: 'system', content: `Preferencia de estilo: ${style}` } as ChatMessage] : []),
         ...(context?.category ? [{ role: 'system', content: `Categoría actual: ${context.category}` } as ChatMessage] : []),
         ...(context?.cart && context.cart.length
           ? [{ role: 'system', content: `Carrito: ${context.cart.map(c=>`${c.title} ($${c.price})`).join(', ')}` } as ChatMessage]
