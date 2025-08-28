@@ -44,3 +44,5 @@ npm run start:termux
 Notas:
 - El paquete `@next/swc-wasm-nodejs` está incluido para entornos sin binarios SWC.
 - En dispositivos con pocos recursos, preferí `npm run start:termux` en lugar de `dev`.
+
+Autenticación y monedas: removidos en esta build según solicitud.

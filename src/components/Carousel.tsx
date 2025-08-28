@@ -19,8 +19,10 @@ export default function Carousel({ children }: CarouselProps) {
   }
 
   useEffect(() => {
-    update()
+    // Reset al inicio del carrusel
     const el = viewportRef.current
+    if (el) el.scrollLeft = 0
+    update()
     if (!el) return
     const onScroll = () => update()
     el.addEventListener('scroll', onScroll, { passive: true })

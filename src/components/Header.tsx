@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import { ShoppingCart, Search, Menu, X, ChevronDown, User } from 'lucide-react'
+import { ShoppingCart, Search, Menu, X, ChevronDown } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 export function Header() {
@@ -28,9 +28,6 @@ export function Header() {
             <span className="font-display text-xl md:text-2xl text-white animate-glitch">Fahren</span>
           </Link>
           <div className="flex items-center gap-2">
-            <Link href="/perfil" className="relative inline-flex items-center rounded-full bg-carbon-800/80 px-3 py-1.5 text-metal-200 backdrop-blur transition hover:bg-carbon-800">
-              <User className="h-4 w-4" />
-            </Link>
             <Link href="/carrito" className="relative inline-flex items-center rounded-full bg-carbon-800/80 px-3 py-1.5 text-metal-200 backdrop-blur transition hover:bg-carbon-800">
               <ShoppingCart className="mr-2 h-4 w-4" />
               <span className="text-sm">Inventario</span>
@@ -56,8 +53,6 @@ export function Header() {
             </div>
             <nav className="mt-6 space-y-1 text-metal-300/90">
               <Link href="/" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Inicio</Link>
-
-              <Link href="/perfil" className="block rounded px-2 py-2 hover:bg-carbon-800 hover:text-white" onClick={()=>setOpen(false)}>Ingresar / Registrarse</Link>
 
               <button aria-expanded={openProductos} onClick={() => setOpenProductos(v=>!v)} className="flex w-full items-center justify-between rounded px-2 py-2 text-left hover:bg-carbon-800 hover:text-white">
                 <span>Productos</span>

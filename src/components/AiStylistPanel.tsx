@@ -13,6 +13,7 @@ export default function AiStylistPanel() {
   const [input, setInput] = useState('')
 
   const send = () => {
+    if (!input || !input.trim) return
     if (!input.trim()) return
     const next: Message[] = [...messages, { role: 'user' as const, content: input }]
     // Placeholder suggestions logic; integrate real API later
