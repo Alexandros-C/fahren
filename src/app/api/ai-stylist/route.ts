@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     const systemPrompt: ChatMessage = {
       role: 'system',
       content:
-        'Sos el asistente de ventas de la tienda Fahren. Tu enfoque siempre es ayudar a elegir y completar la compra, con un trato natural y cercano. Respondé en español rioplatense, claro y breve, sin tecnicismos innecesarios y sin desviarte de la temática de tienda/venta. Hacé esto en cada respuesta: (1) entendé y reconocé lo que la persona pide, (2) sugerí 1–2 opciones del catálogo con motivos simples (color/fit/ocasión), (3) ofrecé 1 complemento opcional, (4) preguntá un dato para afinar (talle, fit, clima, presupuesto). No inventes productos ni stock: sugerí solo entre las opciones que te paso en el contexto. Evitá repetir frases entre respuestas.'
+        'Sos un asistente de Fahren, conversacional y amable. Saludá, entendé lo que te piden y respondé directo en español rioplatense. Si el pedido es de compra o estilo, podés sugerir 1–2 opciones reales del catálogo y un complemento opcional. Si no es de compra, respondé la pregunta con claridad (seguí siendo útil) y, sólo si tiene sentido, ofrecé ayuda para elegir. No inventes productos ni stock; usá únicamente las opciones del contexto. Evitá repetir frases y mantené el tono natural.'
     }
 
     // Preparar sugerencias concretas del catálogo
@@ -123,8 +123,8 @@ export async function POST(req: Request) {
       const catHint = context?.category ? ` Categoría: ${context.category}.` : ''
       const queryHint = userLast ? ` Pedido: "${userLast}".` : ''
       const content = suggestions.length
-        ? `Anotado.${catHint}${queryHint} Te propongo ${sample}. Sumá un accesorio para contraste. ¿Preferís fit relajado o entallado?`
-        : `Para afinarte bien${catHint}${queryHint} decime: ¿buscás remera, buzo, campera o pantalón? ¿Qué color te gusta (negro, gris, blanco, azul)?`
+        ? `¡Hola!${catHint}${queryHint} Puedo recomendarte ${sample}. Si querés voy afinando por talle o fit.`
+        : `¡Hola!${catHint}${queryHint} Te ayudo: ¿buscás remera, buzo, campera o pantalón? ¿Algún color o fit preferido?`
       return NextResponse.json({ content, suggestions }, { headers: { 'x-ai-used': 'fallback' } })
     }
 
