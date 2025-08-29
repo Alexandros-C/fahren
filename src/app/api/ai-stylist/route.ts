@@ -99,11 +99,15 @@ export async function POST(req: Request) {
       const haystack = normalizeEs(`${p.title} ${p.category}`)
       const hasCategory = Array.from(expandedTokens).some(t => ['remeras','buzos','camperas','jeans','joggers','gorros','accesorios'].includes(t) && (p.category === t))
       const keywordHits = Array.from(expandedTokens).reduce((acc, t) => acc + (haystack.includes(t) ? 1 : 0), 0)
-      const score = (hasCategory ? 2 : 0) + keywordHits + (p.isBestSeller ? 0.2 : 0)
+      const jitter = Math.random() * 0.6 // volatilidad controlada
+      const score = (hasCategory ? 2 : 0) + keywordHits + (p.isBestSeller ? 0.2 : 0) + jitter
       return { p, score }
     })
     scored.sort((a,b) => b.score - a.score || (+new Date(b.p.createdAt) - +new Date(a.p.createdAt)))
-    let suggestions = scored.slice(0, 3).map(({ p }) => ({ id: p.id, title: p.title, price: p.price, image: p.image, category: p.category }))
+    // tomar un pool más amplio y muestrear aleatorio
+    const pool = scored.slice(0, 8).map(({ p }) => p)
+    const shuffled = [...pool].sort(() => Math.random() - 0.5)
+    let suggestions = shuffled.slice(0, 3).map((p) => ({ id: p.id, title: p.title, price: p.price, image: p.image, category: p.category }))
     if (suggestions.length === 0) {
       // Priorizar best-sellers si no hay match
       const fallbacks = [...candidates].filter(p => p.isBestSeller)
@@ -139,11 +143,11 @@ export async function POST(req: Request) {
         ...(assistantLast ? [{ role: 'system', content: `Evitá repetir literalmente: ${assistantLast.slice(0, 160)}` } as ChatMessage] : []),
         ...messages,
       ].slice(-12),
-      temperature: 0.7,
+      temperature: 1.0,
       presence_penalty: 0.6,
-      frequency_penalty: 0.8,
+      frequency_penalty: 0.7,
       max_tokens: 220,
-      top_p: 0.9
+      top_p: 0.95
     }
 
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
